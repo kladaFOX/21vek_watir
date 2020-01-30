@@ -21,6 +21,7 @@ end
     end
   end
 
+
   class HomePage < BrowserContainer
     URL = 'https://www.21vek.by/'
 
@@ -57,15 +58,9 @@ end
     end
 
     def put_in_the_cart(place)
-      unless place % 4 == 0
-        column = place / 4 + 1
-        place = 4
-      else
-        column = place / 4
-        place %= 4
-      end
-
-      buy_item_button(place, column)
+      column = (place - 1) % 4 + 1
+      row = (place - 1) / 4 + 1
+      buy_item_button(column, row)
       puts items_in_cart
       Watir::Wait.until{items_in_cart != "нет товаров"}
       puts items_in_cart
@@ -89,8 +84,8 @@ end
       @browser.button(id: "j-filter__btn").click
     end
 
-    def buy_item_button(place, column)
-      xpath_string = "//*[@id='j-result-page-1']/div[#{column}]/div/ul/li[#{place}]/dl/dd/div/span[2]/form/button"
+    def buy_item_button(column, row)
+      xpath_string = "//*[@id='j-result-page-1']/div[#{row}]/div/ul/li[#{column}]/dl/dd/div/span[2]/form/button"
       @browser.element(:xpath, xpath_string).click
     end
 
