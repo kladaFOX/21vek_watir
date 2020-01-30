@@ -61,9 +61,7 @@ end
       column = (place - 1) % 4 + 1
       row = (place - 1) / 4 + 1
       buy_item_button(column, row)
-      puts items_in_cart
       Watir::Wait.until{items_in_cart != "нет товаров"}
-      puts items_in_cart
     end
 
     def item_present_in_cart?(how_many)
